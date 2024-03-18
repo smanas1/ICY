@@ -1,13 +1,18 @@
 const express = require("express");
 const cors = require("cors");
 const chats = require("./data/data");
+const dbConnection = require("./config/db");
+const router = require("./routes/authRoute");
 require("dotenv").config();
 
 const port = process.env.PORT || 8000;
 
 const app = express();
 app.use(cors());
+app.use(express.json());
+dbConnection();
 
+app.use("/", router);
 app.get("/api/chat", (req, res) => {
   res.send(chats);
 });
